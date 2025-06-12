@@ -18,23 +18,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $isValid = true;
 
-    if (!preg_match("/^[A-Za-z]+$/", $name)) {
-        $nameErr = "Only letters allowed, no spaces.";
+    // Validate name: only letters and spaces
+    if (!preg_match("/^[A-Za-z\s]+$/", $name)) {
+        $nameErr = "Only letters and spaces allowed in name.";
         $isValid = false;
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $emailErr = "Invalid email format.";
+    // Validate email: must start with a letter, valid domain and allowed TLDs
+    if (!preg_match("/^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z]{2,}\.(com|org|net|in|edu|gov)$/", $email)) {
+        $emailErr="Invalid email format";
+        //$emailErr = "Invalid email format. It must start with a letter, have 2+ letter domain, and end in .com, .org, .net, .in, .edu, or .gov";
         $isValid = false;
-    // } elseif (preg_match('/\s/', $email)) {
-
-
-    }elseif(preg_match('/^[a-zA-Z._-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,6}$/',$email)){
-        
+    } elseif (preg_match('/\s/', $email)) {
         $emailErr = "Email must not contain spaces.";
         $isValid = false;
     }
 
+    // Check if email already exists
     if ($isValid) {
         $check = $conn->prepare("SELECT id FROM employees WHERE email = ?");
         $check->bind_param("s", $email);
@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $check->close();
     }
 
+    // Insert into database
     if ($isValid) {
         $stmt = $conn->prepare("INSERT INTO employees (name, email, position, join_date) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $name, $email, $position, $join_date);
@@ -152,11 +153,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form method="post">
         <label for="name">Name</label>
-        <input type="text" name="name" pattern="[A-Za-z]+" title="Only letters allowed, no spaces" required>
+        <input type="text" name="name"
+               pattern="^[A-Za-z\s]+$"
+               title="Only letters and spaces allowed"
+               required>
         <div class="error"><?php echo $nameErr; ?></div>
 
         <label for="email">Email</label>
-        <input type="email" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Valid email, no spaces" required>
+        <input type="email" name="email"
+               pattern="[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z]{2,}\.(com|org|net|in|edu|gov)"
+               title="Must start with a letter, have 2+ letter domain, and end in .com, .org, .net, .in, .edu, or .gov"
+               required>
         <div class="error"><?php echo $emailErr; ?></div>
 
         <label for="position">Position</label>
@@ -169,9 +176,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
     <a class="back-link" href="employee-list.php">← Back to Employee List</a>
-    
-    <!-- <a href="employees.php">&#8592; Back to Employee List</a> -->
-
 </div>
 
 </body>
