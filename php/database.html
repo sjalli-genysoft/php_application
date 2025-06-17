@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Database Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f3;
+            padding: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            margin-top: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .section {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Database Design Overview</h2>
+
+    <div class="section">
+        <h3>Table: users</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Column</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT AUTO_INCREMENT</td><td>Primary Key</td></tr>
+                <tr><td>full_name</td><td>VARCHAR(100)</td><td>User's full name</td></tr>
+                <tr><td>email</td><td>VARCHAR(100)</td><td>User's email</td></tr>
+                <tr><td>password</td><td>VARCHAR(255)</td><td>Hashed password</td></tr>
+                <tr><td>gender</td><td>VARCHAR(10)</td><td>Male/Female</td></tr>
+                <tr><td>dob</td><td>DATE</td><td>Date of Birth</td></tr>
+                <tr><td>country</td><td>VARCHAR(100)</td><td>Country</td></tr>
+                <tr><td>state</td><td>VARCHAR(100)</td><td>State</td></tr>
+                <tr><td>city</td><td>VARCHAR(100)</td><td>City</td></tr>
+                <tr><td>image</td><td>VARCHAR(255)</td><td>Uploaded profile photo</td></tr>
+                <tr><td>role</td><td>VARCHAR(20)</td><td>admin / user</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h3>Tables: countries, states, cities</h3>
+        <table>
+            <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT AUTO_INCREMENT</td><td>Primary Key</td></tr>
+                <tr><td>name</td><td>VARCHAR(100)</td><td>Location name</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+
+
+
+<!-- 
+
+
+email: admin@example.com
+password: admin123 -->

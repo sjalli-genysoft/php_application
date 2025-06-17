@@ -135,3 +135,11 @@ CREATE TABLE admin (
     password VARCHAR(255) NOT NULL
 );
 INSERT INTO admin (username, password) VALUES ('admin', MD5('admin123')); -->
+
+
+
+
+
+
+
+<!-- username: admin , pasword: admin123 -->

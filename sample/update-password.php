@@ -24,4 +24,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<script>alert('Failed to update password.'); window.location.href='change-password.php';</script>";
     }
-}
+}   
